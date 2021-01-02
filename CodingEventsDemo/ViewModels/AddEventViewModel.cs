@@ -19,15 +19,30 @@ namespace CodingEventsDemo.ViewModels
         [EmailAddress]
         public string ContactEmail { get; set; }
 
-        public EventType Type { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
+        public List<SelectListItem> Categories { get; set; }
 
-        public List<SelectListItem> EventTypes { get; set;  } = new List<SelectListItem>
+        public AddEventViewModel()
         {
-            new SelectListItem(EventType.Conference.ToString(), ((int)EventType.Conference).ToString()),
-            new SelectListItem(EventType.Meetup.ToString(), ((int)EventType.Meetup).ToString()),
-            new SelectListItem(EventType.Social.ToString(), ((int)EventType.Social).ToString()),
-            new SelectListItem(EventType.Workshop.ToString(), ((int)EventType.Workshop).ToString())
-        };
+        }
+
+        public AddEventViewModel(List<EventCategory> categories)
+        {
+            Categories = new List<SelectListItem>();
+
+            foreach (var cat in categories)
+            {
+                Categories.Add
+                (
+                    new SelectListItem
+                    {
+                        Value = cat.Id.ToString(),
+                        Text = cat.Name
+                    }
+                );
+            }
+        }
 
     }
 }
